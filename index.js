@@ -4,18 +4,18 @@ const rateLimit = {};
 
 function blockIP(ip) {
   rateLimit[ip] = (rateLimit[ip] || 0) + 1;
-  if (rateLimit[ip] > 10) {
+  if (rateLimit[ip] > 2) {
     alert(`Seu IP ${ip} foi bloqueado temporariamente por exceder o limite de solicitações.`);
     btnElement.disabled = true; // Bloquear o botão
     setTimeout(() => {
       rateLimit[ip] = 0; // Zerar o contador de solicitações
       btnElement.disabled = false; // Desbloquear o botão após o tempo determinado
-    }, 5000); // Bloquear temporariamente o botão por 5 segundos
+    }, 10000); // Bloquear temporariamente o botão por 5 segundos
   }
 }
 
 const btnElement = document.querySelector('button');
-const allowedRequests = 10; // Limite de solicitações permitidas em um curto período de tempo
+const allowedRequests = 2; // Limite de solicitações permitidas em um curto período de tempo
 let requestCount = 0;
 
 function handleButtonClick() {
@@ -28,14 +28,14 @@ function handleButtonClick() {
   
   setTimeout(() => {
     requestCount = 0; // Zerar o contador de solicitações após o tempo determinado
-  }, 5000); // Tempo de reset das solicitações (5 segundos)
+  }, 10000); // Tempo de reset das solicitações (5 segundos)
 }
 
 btnElement.addEventListener('click', handleButtonClick);
 
 // Contador para acompanhar as tentativas de envio bem-sucedidas do formulário
 let successfulAttempts = 0;
-const maxSuccessfulAttempts = 3; // Limite de tentativas permitidas em um curto período de tempo
+const maxSuccessfulAttempts = 2; // Limite de tentativas permitidas em um curto período de tempo
 
 // Função para validar o formulário antes de ser enviado
 function validateForm() {
