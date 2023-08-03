@@ -13,22 +13,18 @@
   <p>Este é um site básico que utiliza algumas medidas de segurança contra ataques DDoS e inclui uma verificação de
     captchas.</p>
 
-  <!-- Firewall de Aplicação Web (WAF) -->
-  <script src="security.js"></script>
-
-  <!-- Limite de Taxa de Solicitações (Rate Limiting) -->
-  <script src="security.js"></script>
-
   <!-- Verificação de Captchas -->
-  <form>
+  <form onsubmit="return validateForm()">
     <!-- Substitua 'SEU_SITE_KEY' pela chave do seu site fornecida pelo Google reCAPTCHA -->
     <div class="g-recaptcha" data-sitekey="6Lf3F3snAAAAAIJAkwt3QWDHoLPMJV0eG1e-QBiD"></div>
     <button type="submit">Enviar</button>
   </form>
 
-  <p>Experimente clicar várias vezes no botão acima em um curto espaço de tempo. O botão será bloqueado temporariamente
-    após atingir o limite de solicitações permitidas. Além disso, preencha o captcha corretamente antes de enviar o
-    formulário.</p>
+  <p>Experimente clicar várias vezes no botão acima em um curto espaço de tempo. O botão só será ativado se o reCAPTCHA
+    for concluído com sucesso.</p>
+
+  <!-- Firewall de Aplicação Web (WAF) e Limite de Taxa de Solicitações (Rate Limiting) -->
+  <script src="security.js"></script>
 </body>
 
 </html>
