@@ -33,6 +33,10 @@ function handleButtonClick() {
 
 btnElement.addEventListener('click', handleButtonClick);
 
+// Contador para acompanhar as tentativas de envio bem-sucedidas do formulário
+let successfulAttempts = 0;
+const maxSuccessfulAttempts = 3; // Limite de tentativas permitidas em um curto período de tempo
+
 // Função para validar o formulário antes de ser enviado
 function validateForm() {
   // Verificar se o reCAPTCHA foi concluído
@@ -42,8 +46,17 @@ function validateForm() {
     return false; // Impede o envio do formulário
   }
 
+  // Verificar se o limite de tentativas bem-sucedidas foi excedido
+  successfulAttempts++;
+  if (successfulAttempts > maxSuccessfulAttempts) {
+    alert('Você atingiu o limite de envios permitidos. Tente novamente em alguns minutos.');
+    return false; // Impede o envio do formulário
+  }
+
   // Aqui você pode adicionar outras verificações e validações do formulário, se necessário.
 
   return true; // Permite o envio do formulário
 }
+
+
 
