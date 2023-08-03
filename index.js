@@ -7,10 +7,7 @@ function blockIP(ip) {
   if (rateLimit[ip] > 10) {
     alert(`Seu IP ${ip} foi bloqueado temporariamente por exceder o limite de solicitações.`);
     btnElement.disabled = true; // Bloquear o botão
-    setTimeout(() => {
-      rateLimit[ip] = 0; // Zerar o contador de solicitações
-      btnElement.disabled = false; // Desbloquear o botão após o tempo determinado
-    }, 5000); // Bloquear temporariamente o botão por 5 segundos
+    document.cookie = "blocked=true"; // Definir um cookie para sinalizar o bloqueio
   }
 }
 
@@ -39,6 +36,12 @@ const maxSuccessfulAttempts = 2; // Limite de tentativas permitidas em um curto 
 
 // Função para validar o formulário antes de ser enviado
 function validateForm() {
+  // Verificar se o formulário já está bloqueado
+  if (document.cookie.includes("blocked=true")) {
+    alert('Você atingiu o limite de envios permitidos. Tente novamente em alguns minutos.');
+    return false; // Impede o envio do formulário
+  }
+
   // Verificar se o reCAPTCHA foi concluído
   const response = grecaptcha.getResponse();
   if (response.length === 0) {
@@ -50,6 +53,8 @@ function validateForm() {
   successfulAttempts++;
   if (successfulAttempts > maxSuccessfulAttempts) {
     alert('Você atingiu o limite de envios permitidos. Tente novamente em alguns minutos.');
+    btnElement.disabled = true; // Bloquear o botão após exceder o limite
+    document.cookie = "blocked=true"; // Definir um cookie para sinalizar o bloqueio
     return false; // Impede o envio do formulário
   }
 
